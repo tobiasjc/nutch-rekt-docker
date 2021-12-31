@@ -42,3 +42,4 @@ RUN mkdir nutch && tar -xf apache-nutch-1.18-bin.tar.gz -C ${NUTCH_HOME} --strip
 RUN ln -sf "${NUTCH_HOME}/bin/nutch" /usr/local/bin/
 RUN ln -sf "${NUTCH_HOME}/bin/crawl" /usr/local/bin/
 RUN ln -sf "${REKT_HOME}/rekt" /usr/local/bin/
+

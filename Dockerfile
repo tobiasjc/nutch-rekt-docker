@@ -33,8 +33,8 @@ RUN wget -q https://dlcdn.apache.org/nutch/1.18/apache-nutch-1.18-bin.tar.gz \
 
 # Check keys from the download
 RUN sha512sum apache-nutch-1.18-bin.tar.gz >local.sha512
-RUN sed --in-place='' -E 's/^([a-z0-9]+)(.*)/\1/g' local.sha512
-RUN sed --in-place='' -E 's/(.*)?\s([a-z0-9]*)?/\2/g' apache-nutch-1.18-bin.tar.gz.sha512
+RUN sed -i'' -E 's/^([a-z0-9]+)(.*)/\1/g' local.sha512
+RUN sed -i'' -E 's/(.*)?\s([a-z0-9]*)?/\2/g' apache-nutch-1.18-bin.tar.gz.sha512
 RUN cmp -s local.sha512 apache-nutch-1.18-bin.tar.gz.sha512
 RUN rm -rf local.sha512 && rm -rf apache-nutch-1.18-bin.tar.gz.sha512
 

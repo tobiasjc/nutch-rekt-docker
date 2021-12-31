@@ -20,26 +20,31 @@ LABEL fork="Rekt <jose.tobias@outlook.com>"
 WORKDIR /root/
 
 # Install dependencies
-RUN apk update
-RUN apk --no-cache add bash wget ca-certificates
+RUN apk update && apk --no-cache add git wget ca-certificates bash
 
 # ENV JAVA_HOME='/usr/lib/jvm/java-11-openjdk'
 ENV NUTCH_HOME='/root/nutch/'
-ENV REKT_HOME='/root/rekt'
-ENV NUTCH_BINARY_ARCHIVE="apache-nutch-1.18-bin.tar.gz"
+ENV REKT_HOME='/root/rekt/'
 RUN echo 'export JAVA_HOME=${JAVA_HOME}' >> $HOME/.bashrc
 
 # Download binary nutch and keys for check
 RUN wget -q https://dlcdn.apache.org/nutch/1.18/apache-nutch-1.18-bin.tar.gz \
 	&& wget -q https://apache.org/dist/nutch/1.18/apache-nutch-1.18-bin.tar.gz.sha512
 
+# Check keys from the download
 RUN sha512sum apache-nutch-1.18-bin.tar.gz >local.sha512
-RUN if [[ $(sed -E 's/^([a-z0-9]+)(.*)/\1/g' local.sha512) !=  $(sed -E 's/(.*)?\s([a-z0-9]*)?/\2/g' apache-nutch-1.18-bin.tar.gz.sha512) ]]; then echo "signature check failure"; exit 1; fi
-RUN rm -rf apache-nutch-1.18-bin.tar.gz.sha512 && rm -rf local.sha512
+RUN sed --in-place='' -E 's/^([a-z0-9]+)(.*)/\1/g' local.sha512
+RUN sed --in-place='' -E 's/(.*)?\s([a-z0-9]*)?/\2/g' apache-nutch-1.18-bin.tar.gz.sha512
+RUN cmp -s local.sha512 apache-nutch-1.18-bin.tar.gz.sha512
+RUN rm -rf local.sha512 && rm -rf apache-nutch-1.18-bin.tar.gz.sha512
+
+# Extract apache nutch to the already pointed NUTCH_HOME path
 RUN mkdir nutch && tar -xf apache-nutch-1.18-bin.tar.gz -C ${NUTCH_HOME} --strip-components=1 && rm -rf apache-nutch-1.18-bin.tar.gz
 
-# Create symlinks for runtime/local/bin/nutch and runtime/local/bin/crawl
+# Download Rekt
+RUN git clone --quiet https://github.com/tobiasjc/rekt rekt
+
+# Create symlinks for bin/nutch and bin/crawl
 RUN ln -sf "${NUTCH_HOME}/bin/nutch" /usr/local/bin/
 RUN ln -sf "${NUTCH_HOME}/bin/crawl" /usr/local/bin/
 RUN ln -sf "${REKT_HOME}/rekt" /usr/local/bin/
-

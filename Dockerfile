@@ -48,5 +48,3 @@ RUN git clone --quiet https://github.com/tobiasjc/rekt rekt
 RUN ln -sf "${NUTCH_HOME}/bin/nutch" /usr/local/bin/
 RUN ln -sf "${NUTCH_HOME}/bin/crawl" /usr/local/bin/
 RUN ln -sf "${REKT_HOME}/rekt" /usr/local/bin/
-
-CMD rekt -s -c

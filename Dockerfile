@@ -49,4 +49,4 @@ RUN ln -sf "${NUTCH_HOME}/bin/nutch" /usr/local/bin/
 RUN ln -sf "${NUTCH_HOME}/bin/crawl" /usr/local/bin/
 RUN ln -sf "${REKT_HOME}/rekt" /usr/local/bin/
 
-ENTRYPOINT ["/bin/bash", "-c" "rekt", "-s", "-c" ]
+CMD rekt -s -c

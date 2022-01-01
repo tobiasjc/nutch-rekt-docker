@@ -20,7 +20,7 @@ LABEL fork="Rekt <jose.tobias@outlook.com>"
 WORKDIR /root/
 
 # Install dependencies
-RUN apk update && apk --no-cache add git wget ca-certificates bash
+RUN apk update && apk --no-cache add git wget ca-certificates openjdk11 bash
 
 # ENV JAVA_HOME='/usr/lib/jvm/java-11-openjdk'
 ENV NUTCH_HOME='/root/nutch/'
@@ -50,4 +50,4 @@ RUN ln -sf "${NUTCH_HOME}/bin/nutch" /usr/local/bin/
 RUN ln -sf "${NUTCH_HOME}/bin/crawl" /usr/local/bin/
 RUN ln -sf "${REKT_HOME}/rekt" /usr/local/bin/
 
-ENTRYPOINT [ "/bin/bash", "-c", "rekt", "-s", "-c" ]
+ENTRYPOINT [ "rekt", "-s", "-c" ]

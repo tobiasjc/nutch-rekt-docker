@@ -14,8 +14,8 @@
 # limitations under the License.
 
 FROM alpine:latest
-LABEL maintainer="Apache Nutch Committers <dev@nutch.apache.org>"
-LABEL fork="Rekt <jose.tobias@outlook.com>"
+LABEL nutch="Apache Nutch Committers <dev@nutch.apache.org>"
+LABEL rekt="José Tobias <jose.tobias@outlook.com>"
 
 WORKDIR /root/
 

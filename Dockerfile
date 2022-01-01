@@ -25,6 +25,7 @@ RUN apk update && apk --no-cache add git wget ca-certificates bash
 # ENV JAVA_HOME='/usr/lib/jvm/java-11-openjdk'
 ENV NUTCH_HOME='/root/nutch/'
 ENV REKT_HOME='/root/rekt/'
+ENV JAVA_HOME='/usr/lib/jvm/java-11-openjdk'
 RUN echo 'export JAVA_HOME=${JAVA_HOME}' >> $HOME/.bashrc
 
 # Download binary nutch and keys for check
